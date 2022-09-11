@@ -1,5 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
+import reducer from './slices/board_slice';
 
 export default configureStore({
-  reducer: {}
-})
+  reducer: {
+    board: reducer,
+  },
+});

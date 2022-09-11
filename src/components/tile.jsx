@@ -1,7 +1,12 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 
 const Tile = (props) => {
-  return <div className='tile'></div>;
+  const dispatch = useDispatch();
+
+  const onClick = () => {};
+
+  return <div className='tile' onClick={onClick}></div>;
 };
 
 export default Tile;
