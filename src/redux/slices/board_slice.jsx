@@ -38,9 +38,19 @@ const boardSlice = createSlice({
 
       return board;
     },
+    openTile: (state, {payload: {x, y}}) => {
+      return state.map(
+        (row, yIndex) =>
+          row.map((tile, xIndex) => ({
+            open: xIndex === x && yIndex === y ? true : state[y][x].open,
+            isMine: state[y][x].isMine,
+          })),
+        []
+      );
+    },
   },
 });
 
 const {actions, reducer} = boardSlice;
-export const {generateBoard} = actions;
+export const {generateBoard, openTile} = actions;
 export default reducer;

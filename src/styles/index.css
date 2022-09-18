@@ -2,4 +2,10 @@
   background-color: grey;
   height: 20px;
   width: 20px;
+  margin: 2px;
+}
+
+.board-row {
+  display: flex;
+  flex-flow: row;
 }

@@ -1,15 +1,15 @@
-import Tile from 'components/tile';
+import Board from 'components/board';
 import {useDispatch} from 'react-redux';
 import {generateBoard} from 'redux/slices/board_slice';
 
 function App() {
   const dispatch = useDispatch();
 
-  dispatch(generateBoard({width: 20, height: 20, mineCount: 300}));
+  dispatch(generateBoard({width: 20, height: 10, mineCount: 100}));
 
   return (
     <div className='App'>
-      <Tile />
+      <Board />
     </div>
   );
 }
