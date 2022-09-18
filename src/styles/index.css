@@ -1,11 +1,35 @@
+.tile-clickbox {
+  height: 30px;
+  width: 30px;
+  padding: 2px;
+}
+
 .tile {
-  background-color: grey;
-  height: 20px;
-  width: 20px;
-  margin: 2px;
+  height: 100%;
+  width: 100%;
+}
+
+.tile-open {
+  background-color: rgb(215, 215, 215);
+}
+
+.tile-open.tile-mine {
+  background-color: red;
+}
+
+.tile-unopen {
+  background-color: rgb(150, 150, 150);
 }
 
 .board-row {
   display: flex;
   flex-flow: row;
+}
+
+.tile-clickbox:hover>.tile-unopen {
+  background-color: rgb(182.5, 182.5, 182.5)
+}
+
+.tile-clickbox-clickable:hover {
+  cursor: pointer;
 }

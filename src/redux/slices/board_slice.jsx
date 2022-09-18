@@ -42,8 +42,8 @@ const boardSlice = createSlice({
       return state.map(
         (row, yIndex) =>
           row.map((tile, xIndex) => ({
-            open: xIndex === x && yIndex === y ? true : state[y][x].open,
-            isMine: state[y][x].isMine,
+            open: xIndex === x && yIndex === y ? true : tile.open,
+            isMine: tile.isMine,
           })),
         []
       );
