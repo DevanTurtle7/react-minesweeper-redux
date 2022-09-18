@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit';
-import reducer from './slices/board_slice';
+import reducer from 'redux/slices/board_slice';
 
 export default configureStore({
   reducer: {
