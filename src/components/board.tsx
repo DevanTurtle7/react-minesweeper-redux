@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux';
 import {useBoard} from 'redux/selectors/use_board';
 import Tile from 'components/tile';
-import {Row} from '@root/types';
+import {Row} from '../types';
 
 const Board = () => {
   const {board, height, width} = useSelector(useBoard);

@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {Board, Row, Tile} from '@root/types';
+import {Board} from '../../types';
 
 export interface State {
   board: Board;
