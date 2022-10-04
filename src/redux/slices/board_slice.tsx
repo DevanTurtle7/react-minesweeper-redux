@@ -51,6 +51,6 @@ const boardSlice = createSlice({
   },
 });
 
-const {actions, reducer} = boardSlice;
+const {actions, reducer: board_reducers} = boardSlice;
 export const {generateBoard, openTile} = actions;
-export default reducer;
+export default board_reducers;

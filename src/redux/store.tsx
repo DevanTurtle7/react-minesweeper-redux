@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
-import reducer from 'redux/slices/board_slice';
+import board_reducers from 'redux/slices/board_slice';
+import game_state_reducers from 'redux/slices/game_state_slice';
 
 export default configureStore({
   reducer: {
-    board: reducer,
+    board: board_reducers,
+    gameState: game_state_reducers,
   },
 });
