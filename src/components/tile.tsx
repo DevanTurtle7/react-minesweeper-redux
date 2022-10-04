@@ -6,8 +6,6 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   const dispatch = useDispatch();
   const {open, isMine} = useSelector(getTileFromPosition({x, y}));
 
-  console.log(open);
-
   const onClick = () => {
     dispatch(
       openTile({

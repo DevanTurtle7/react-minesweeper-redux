@@ -1,17 +1,22 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {Board, Row, Tile} from '@root/types';
+
+interface State {
+  board: Board;
+}
 
 const boardSlice = createSlice({
   name: 'board',
   initialState: [],
   reducers: {
-    generateBoard: (state, {payload: {height, width, mineCount}}) => {
+    generateBoard: (state: State, {payload: {height, width, mineCount}}) => {
       if (mineCount > height * width) {
         return [...state];
       }
 
       let minesPlaced = 0;
       const mineLocations = new Set();
-      const board = [];
+      const board: Board = [];
 
       while (minesPlaced < mineCount) {
         const y = Math.floor(Math.random() * height);
@@ -40,8 +45,8 @@ const boardSlice = createSlice({
     },
     openTile: (state, {payload: {x, y}}) => {
       return state.map(
-        (row, yIndex) =>
-          row.map((tile, xIndex) => ({
+        (row: Row, yIndex) =>
+          row.map((tile: Tile, xIndex: number) => ({
             open: xIndex === x && yIndex === y ? true : tile.open,
             isMine: tile.isMine,
           })),
