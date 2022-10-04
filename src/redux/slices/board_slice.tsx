@@ -1,15 +1,17 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Board, Row, Tile} from '@root/types';
 
-interface State {
+export interface State {
   board: Board;
 }
 
+const initialState: Board = [];
+
 const boardSlice = createSlice({
   name: 'board',
-  initialState: [],
+  initialState,
   reducers: {
-    generateBoard: (state: State, {payload: {height, width, mineCount}}) => {
+    generateBoard: (state, {payload: {height, width, mineCount}}) => {
       if (mineCount > height * width) {
         return [...state];
       }
@@ -44,14 +46,7 @@ const boardSlice = createSlice({
       return board;
     },
     openTile: (state, {payload: {x, y}}) => {
-      return state.map(
-        (row: Row, yIndex) =>
-          row.map((tile: Tile, xIndex: number) => ({
-            open: xIndex === x && yIndex === y ? true : tile.open,
-            isMine: tile.isMine,
-          })),
-        []
-      );
+      state[y][x].open = true;
     },
   },
 });
