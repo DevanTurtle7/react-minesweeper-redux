@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "commonjs",
+    "pretty": true,
+    "sourceMap": true,
+    "strict": true,
+    "baseUrl": "./src",
+    "target": "ES6",
+    "paths": {
+      "@root/*": ["./*"]
+    },
+    "allowJs": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+  },
+  "include": ["src"],
+}
