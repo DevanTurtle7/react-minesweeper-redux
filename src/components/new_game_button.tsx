@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useBoard} from 'redux/selectors/board_selectors';
 import {generateBoard} from 'redux/slices/board_slice';
 
-const ResetButton = () => {
+const NewGameButton = () => {
   const dispatch = useDispatch();
   const {width, height, mineCount} = useSelector(useBoard);
 
@@ -10,7 +10,7 @@ const ResetButton = () => {
     dispatch(generateBoard({width, height, mineCount}));
   };
 
-  return <button onClick={onClick}>Reset</button>;
+  return <button onClick={onClick}>New Game</button>;
 };
 
-export default ResetButton;
+export default NewGameButton;

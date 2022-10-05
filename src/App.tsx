@@ -1,5 +1,5 @@
 import Board from 'components/board';
-import ResetButton from 'components/reset_button';
+import ResetButton from 'components/new_game_button';
 import {useDispatch} from 'react-redux';
 import {generateBoard} from 'redux/slices/board_slice';
 
