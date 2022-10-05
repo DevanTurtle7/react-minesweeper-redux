@@ -1,9 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {useDispatch} from 'react-redux';
 import {getSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board} from '../../types';
-
-//const dispatch = useDispatch();
 
 export interface BoardState {
   board: BoardSlice;
