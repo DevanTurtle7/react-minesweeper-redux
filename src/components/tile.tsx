@@ -9,11 +9,12 @@ import {
   BoardState,
   openTile,
   openTileRecursive,
+  setTileFlag,
 } from 'redux/slices/board_slice';
 
 const Tile = ({x, y}: {x: number; y: number}) => {
   const dispatch = useDispatch();
-  const {open, isMine} = useSelector((state: BoardState) =>
+  const {open, isMine, flagged} = useSelector((state: BoardState) =>
     getTileFromPosition(state, {x, y})
   );
   const count = useSelector((state: BoardState) =>
@@ -27,18 +28,30 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   );
 
   const onClick = () => {
-    dispatch(
-      open
-        ? openTileRecursive({
-            x,
-            y,
-          })
-        : openTile({
-            x,
-            y,
-          })
-    );
+    if (!flagged) {
+      dispatch(
+        open
+          ? openTileRecursive({
+              x,
+              y,
+            })
+          : openTile({
+              x,
+              y,
+            })
+      );
+    }
   };
+
+  const onRightClick = (e: {preventDefault: () => void}) => {
+    e.preventDefault();
+
+    if (!open) {
+      dispatch(setTileFlag({flagged: !flagged, x, y}));
+    }
+  };
+
+  console.log(flagged);
 
   return (
     <div
@@ -46,11 +59,12 @@ const Tile = ({x, y}: {x: number; y: number}) => {
         !open || (satisfied && !neighborsOpen) ? 'clickable' : 'unclickable'
       }`}
       onClick={onClick}
+      onContextMenu={onRightClick}
     >
       <div
         className={`tile tile-${open ? 'open' : 'unopen'} ${
           isMine ? 'tile-mine' : ''
-        }`}
+        } ${flagged ? 'tile-flagged' : ''}`}
       >
         {!isMine && <p className='tile-label'>{count}</p>}
       </div>

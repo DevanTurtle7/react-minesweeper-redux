@@ -40,7 +40,7 @@ const openTileRec = ({
 
   if (satisfied) {
     neighbors.forEach((tile) => {
-      if (!tile.open) {
+      if (!tile.open && !tile.isMine) {
         openTileRec({board, height, width, x: tile.x, y: tile.y});
       }
     });
@@ -104,9 +104,13 @@ const boardSlice = createSlice({
     openTileRecursive: ({board, height, width}, {payload: {x, y}}) => {
       openTileRec({board, height, width, x, y});
     },
+    setTileFlag: ({board}, {payload: {flagged, x, y}}) => {
+      board[y][x].flagged = flagged;
+    },
   },
 });
 
 const {actions, reducer: board_reducers} = boardSlice;
-export const {generateBoard, openTile, openTileRecursive} = actions;
+export const {generateBoard, openTile, openTileRecursive, setTileFlag} =
+  actions;
 export default board_reducers;

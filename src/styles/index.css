@@ -21,6 +21,10 @@
   background-color: rgb(150, 150, 150);
 }
 
+.tile-flagged {
+  background-color: green;
+}
+
 .board-row {
   display: flex;
   flex-flow: row;
