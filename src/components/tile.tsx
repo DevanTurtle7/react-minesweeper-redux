@@ -66,7 +66,7 @@ const Tile = ({x, y}: {x: number; y: number}) => {
           isMine ? 'tile-mine' : ''
         } ${flagged ? 'tile-flagged' : ''}`}
       >
-        {!isMine && <p className='tile-label'>{count}</p>}
+        {!isMine && open && <p className='tile-label unselectable'>{count}</p>}
       </div>
     </div>
   );

@@ -74,10 +74,19 @@ export const getTileSatisfied = createSelector(
     x,
     y,
   }),
-  ({board, height, width}, {x, y}) =>
-    getSurroundingTiles({board, height, width, x, y}).every(
-      (tile) => !tile.isMine || tile.flagged
-    )
+  ({board, height, width}, {x, y}) => {
+    const neighbors = getSurroundingTiles({board, height, width, x, y});
+    const mineCount = neighbors.reduce(
+      (count, tile) => (tile.isMine ? count + 1 : count),
+      0
+    );
+    const flagCount = neighbors.reduce(
+      (count, tile) => (tile.flagged ? count + 1 : count),
+      0
+    );
+
+    return flagCount === mineCount;
+  }
 );
 
 export const getTileNeighborsOpen = createSelector(

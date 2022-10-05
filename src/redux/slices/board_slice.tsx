@@ -36,11 +36,19 @@ const openTileRec = ({
   board[y][x].open = true;
 
   const neighbors = getSurroundingTiles({board, height, width, x, y});
-  const satisfied = neighbors.every((tile) => !tile.isMine || tile.flagged);
+  const mineCount = neighbors.reduce(
+    (count, tile) => (tile.isMine ? count + 1 : count),
+    0
+  );
+  const flagCount = neighbors.reduce(
+    (count, tile) => (tile.flagged ? count + 1 : count),
+    0
+  );
+  const satisfied = flagCount === mineCount;
 
   if (satisfied) {
     neighbors.forEach((tile) => {
-      if (!tile.open && !tile.isMine) {
+      if (!tile.open && !tile.flagged) {
         openTileRec({board, height, width, x: tile.x, y: tile.y});
       }
     });
