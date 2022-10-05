@@ -1,5 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {useDispatch} from 'react-redux';
+import {getSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board} from '../../types';
+
+//const dispatch = useDispatch();
 
 export interface BoardState {
   board: BoardSlice;
@@ -15,6 +19,33 @@ const initialState: BoardSlice = {
   board: [],
   height: 0,
   width: 0,
+};
+
+const openTileRec = ({
+  board,
+  height,
+  width,
+  x,
+  y,
+}: {
+  board: Board;
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}) => {
+  board[y][x].open = true;
+
+  const neighbors = getSurroundingTiles({board, height, width, x, y});
+  const satisfied = neighbors.every((tile) => !tile.isMine || tile.flagged);
+
+  if (satisfied) {
+    neighbors.forEach((tile) => {
+      if (!tile.open) {
+        openTileRec({board, height, width, x: tile.x, y: tile.y});
+      }
+    });
+  }
 };
 
 const boardSlice = createSlice({
@@ -54,6 +85,8 @@ const boardSlice = createSlice({
             open: false,
             isMine: mineLocations.has(key),
             flagged: false,
+            x,
+            y,
           });
         }
       }
@@ -64,8 +97,8 @@ const boardSlice = createSlice({
         width,
       };
     },
-    openTile: (state, {payload: {x, y}}) => {
-      state.board[y][x].open = true;
+    openTile: ({board, height, width}, {payload: {x, y}}) => {
+      openTileRec({board, height, width, x, y});
     },
   },
 });

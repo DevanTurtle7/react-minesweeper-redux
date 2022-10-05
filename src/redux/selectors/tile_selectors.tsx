@@ -44,6 +44,8 @@ export const getSurroundingTiles = ({
             open: currentTile.open,
             isMine: currentTile.isMine,
             flagged: currentTile.flagged,
+            x: currentX,
+            y: currentY,
           });
         }
       }
