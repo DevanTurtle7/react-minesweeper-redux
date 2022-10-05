@@ -51,8 +51,6 @@ const Tile = ({x, y}: {x: number; y: number}) => {
     }
   };
 
-  console.log(flagged);
-
   return (
     <div
       className={`tile-clickbox tile-clickbox-${
