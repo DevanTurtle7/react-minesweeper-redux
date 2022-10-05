@@ -98,12 +98,15 @@ const boardSlice = createSlice({
         mineCount,
       };
     },
-    openTile: ({board, height, width}, {payload: {x, y}}) => {
+    openTile: ({board}, {payload: {x, y}}) => {
+      board[y][x].open = true;
+    },
+    openTileRecursive: ({board, height, width}, {payload: {x, y}}) => {
       openTileRec({board, height, width, x, y});
     },
   },
 });
 
 const {actions, reducer: board_reducers} = boardSlice;
-export const {generateBoard, openTile} = actions;
+export const {generateBoard, openTile, openTileRecursive} = actions;
 export default board_reducers;

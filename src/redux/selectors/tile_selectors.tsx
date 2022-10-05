@@ -67,3 +67,25 @@ export const getTileMineCount = createSelector(
       0
     )
 );
+
+export const getTileSatisfied = createSelector(
+  (state: BoardState) => state.board,
+  (_: BoardState, {x, y}: {x: number; y: number}) => ({
+    x,
+    y,
+  }),
+  ({board, height, width}, {x, y}) =>
+    getSurroundingTiles({board, height, width, x, y}).every(
+      (tile) => !tile.isMine || tile.flagged
+    )
+);
+
+export const getTileNeighborsOpen = createSelector(
+  (state: BoardState) => state.board,
+  (_: BoardState, {x, y}: {x: number; y: number}) => ({
+    x,
+    y,
+  }),
+  ({board, height, width}, {x, y}) =>
+    getSurroundingTiles({board, height, width, x, y}).every((tile) => tile.open)
+);
