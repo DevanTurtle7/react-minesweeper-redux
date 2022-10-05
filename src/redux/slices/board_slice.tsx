@@ -13,8 +13,8 @@ export interface BoardSlice {
 
 const initialState: BoardSlice = {
   board: [],
-  height: 20,
-  width: 20,
+  height: 0,
+  width: 0,
 };
 
 const boardSlice = createSlice({
@@ -53,6 +53,7 @@ const boardSlice = createSlice({
           board[y].push({
             open: false,
             isMine: mineLocations.has(key),
+            flagged: false,
           });
         }
       }

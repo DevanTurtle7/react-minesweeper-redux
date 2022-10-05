@@ -1,6 +1,7 @@
 export interface Tile {
   open: boolean;
   isMine: boolean;
+  flagged: boolean;
 }
 
 export type Row = Array<Tile>;

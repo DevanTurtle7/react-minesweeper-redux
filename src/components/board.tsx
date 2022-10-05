@@ -5,7 +5,6 @@ import {Row} from '../types';
 
 const Board = () => {
   const {board, height, width} = useSelector(useBoard);
-  console.log(height, width);
 
   return (
     <div className='board'>

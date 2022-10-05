@@ -35,7 +35,7 @@ const Tile = ({x, y}: {x: number; y: number}) => {
           isMine ? 'tile-mine' : ''
         }`}
       >
-        <p>{count}</p>
+        {!isMine && <p className='tile-label'>{count}</p>}
       </div>
     </div>
   );

@@ -33,3 +33,7 @@
 .tile-clickbox-clickable:hover {
   cursor: pointer;
 }
+
+.tile-label {
+  margin: 0;
+}
