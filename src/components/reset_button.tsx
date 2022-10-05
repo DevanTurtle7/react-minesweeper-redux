@@ -5,7 +5,7 @@ const ResetButton = () => {
   const dispatch = useDispatch();
 
   const onClick = () => {
-    dispatch(generateBoard({width: 20, height: 10, mineCount: 100}));
+    dispatch(generateBoard({width: 20, height: 10, mineCount: 75}));
   };
 
   return <button onClick={onClick}>Reset</button>;

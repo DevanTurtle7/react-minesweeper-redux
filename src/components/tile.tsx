@@ -1,11 +1,17 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {getTileFromPosition} from 'redux/selectors/tile_selectors';
+import {
+  getTileFromPosition,
+  getTileMineCount,
+} from 'redux/selectors/tile_selectors';
 import {BoardState, openTile} from 'redux/slices/board_slice';
 
 const Tile = ({x, y}: {x: number; y: number}) => {
   const dispatch = useDispatch();
   const {open, isMine} = useSelector((state: BoardState) =>
     getTileFromPosition(state, {x, y})
+  );
+  const count = useSelector((state: BoardState) =>
+    getTileMineCount(state, {x, y})
   );
 
   const onClick = () => {
@@ -28,7 +34,9 @@ const Tile = ({x, y}: {x: number; y: number}) => {
         className={`tile tile-${open ? 'open' : 'unopen'} ${
           isMine ? 'tile-mine' : ''
         }`}
-      />
+      >
+        <p>{count}</p>
+      </div>
     </div>
   );
 };

@@ -25,8 +25,8 @@ const boardSlice = createSlice({
       if (mineCount > height * width) {
         return {
           board: [...state.board],
-          height: state.height,
-          width: state.width,
+          height,
+          width,
         };
       }
 
@@ -59,8 +59,8 @@ const boardSlice = createSlice({
 
       return {
         board: board,
-        height: state.height,
-        width: state.width,
+        height,
+        width,
       };
     },
     openTile: (state, {payload: {x, y}}) => {
