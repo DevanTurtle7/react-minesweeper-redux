@@ -60,6 +60,7 @@ const boardSlice = createSlice({
   initialState,
   reducers: {
     generateBoard: (state, {payload: {height, width, mineCount}}) => {
+      // TODO: Add another generate board reducer for first move. Add ignore tiles
       if (mineCount > height * width) {
         return {
           board: [...state.board],
