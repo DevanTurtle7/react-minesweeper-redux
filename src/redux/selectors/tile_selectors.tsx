@@ -87,5 +87,7 @@ export const getTileNeighborsOpen = createSelector(
     y,
   }),
   ({board, height, width}, {x, y}) =>
-    getSurroundingTiles({board, height, width, x, y}).every((tile) => tile.open)
+    getSurroundingTiles({board, height, width, x, y}).every(
+      (tile) => tile.isMine || tile.open
+    )
 );
