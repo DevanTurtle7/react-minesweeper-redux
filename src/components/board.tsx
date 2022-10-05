@@ -1,5 +1,5 @@
 import {useSelector} from 'react-redux';
-import {useBoard} from 'redux/selectors/use_board';
+import {useBoard} from 'redux/selectors/board_selectors';
 import Tile from 'components/tile';
 import {Row} from '../types';
 
