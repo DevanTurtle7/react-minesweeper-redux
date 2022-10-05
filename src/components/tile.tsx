@@ -1,10 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {getTileFromPosition} from 'redux/selectors/get_tile_from_position';
-import {openTile} from 'redux/slices/board_slice';
+import {getTileFromPosition} from 'redux/selectors/tile_selectors';
+import {BoardState, openTile} from 'redux/slices/board_slice';
 
 const Tile = ({x, y}: {x: number; y: number}) => {
   const dispatch = useDispatch();
-  const {open, isMine} = useSelector(getTileFromPosition({x, y}));
+  const {open, isMine} = useSelector((state: BoardState) =>
+    getTileFromPosition(state, {x, y})
+  );
 
   const onClick = () => {
     dispatch(
