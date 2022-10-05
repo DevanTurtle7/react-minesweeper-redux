@@ -10,12 +10,14 @@ export interface BoardSlice {
   board: Board;
   height: number;
   width: number;
+  mineCount: number;
 }
 
 const initialState: BoardSlice = {
   board: [],
   height: 0,
   width: 0,
+  mineCount: 0,
 };
 
 const openTileRec = ({
@@ -55,6 +57,7 @@ const boardSlice = createSlice({
           board: [...state.board],
           height,
           width,
+          mineCount,
         };
       }
 
@@ -92,6 +95,7 @@ const boardSlice = createSlice({
         board: board,
         height,
         width,
+        mineCount,
       };
     },
     openTile: ({board, height, width}, {payload: {x, y}}) => {

@@ -4,7 +4,7 @@ import Tile from 'components/tile';
 import {Row} from '../types';
 
 const Board = () => {
-  const {board, height, width} = useSelector(useBoard);
+  const {board, width} = useSelector(useBoard);
 
   return (
     <div className='board'>
