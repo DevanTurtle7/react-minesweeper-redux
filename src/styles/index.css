@@ -30,12 +30,9 @@
   flex-flow: row;
 }
 
-.tile-clickbox:hover>.tile-unopen {
-  background-color: rgb(182.5, 182.5, 182.5)
-}
-
 .tile-clickbox-clickable:hover {
   cursor: pointer;
+  opacity: .75;
 }
 
 .tile-label {
