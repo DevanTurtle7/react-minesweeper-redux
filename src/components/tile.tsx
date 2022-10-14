@@ -1,9 +1,8 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  getTileFromPosition,
-  getTileMineCount,
-  getTileNeighborsOpen,
-  getTileSatisfied,
+  selectTileFromPosition,
+  selectTileIsSatisfied,
+  selectTileNeighborsOpen,
 } from 'redux/selectors/tile_selectors';
 import {
   BoardState,
@@ -13,24 +12,22 @@ import {
 } from 'redux/slices/board_slice';
 
 const Tile = ({x, y}: {x: number; y: number}) => {
-  const dispatch = useDispatch();
-  const {open, isMine, flagged} = useSelector((state: BoardState) =>
-    getTileFromPosition(state, {x, y})
-  );
-  const count = useSelector((state: BoardState) =>
-    getTileMineCount(state, {x, y})
+  const {open, isMine, flagged, mineCount, flagCount} = useSelector(
+    (state: BoardState) => selectTileFromPosition(state, {x, y})
   );
   const satisfied = useSelector((state: BoardState) =>
-    getTileSatisfied(state, {x, y})
+    selectTileIsSatisfied(state, {x, y})
   );
   const neighborsOpen = useSelector((state: BoardState) =>
-    getTileNeighborsOpen(state, {x, y})
+    selectTileNeighborsOpen(state, {x, y})
   );
+  const dispatch = useDispatch();
+  const overflagged = flagCount > mineCount && open;
 
   const onClick = () => {
     if (!flagged) {
       dispatch(
-        open
+        open && !overflagged
           ? openTileRecursive({
               x,
               y,
@@ -61,10 +58,14 @@ const Tile = ({x, y}: {x: number; y: number}) => {
     >
       <div
         className={`tile tile-${open ? 'open' : 'unopen'} ${
-          isMine ? 'tile-mine' : ''
-        } ${flagged ? 'tile-flagged' : ''}`}
+          isMine && 'tile-mine'
+        } ${flagged && 'tile-flagged'}
+        ${overflagged && 'tile-overflagged'}
+        `}
       >
-        {!isMine && open && <p className='tile-label unselectable'>{count}</p>}
+        {!isMine && open && (
+          <p className='tile-label unselectable'>{mineCount}</p>
+        )}
       </div>
     </div>
   );

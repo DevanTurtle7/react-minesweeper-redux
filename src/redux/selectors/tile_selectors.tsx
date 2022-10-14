@@ -2,13 +2,27 @@ import {createSelector} from '@reduxjs/toolkit';
 import {BoardState} from 'redux/slices/board_slice';
 import {Board, Tile} from 'types';
 
-export const getTileFromPosition = createSelector(
+export const selectTileFromPosition = createSelector(
   (state: BoardState) => state.board,
   (_: BoardState, {x, y}: {x: number; y: number}) => ({
     x,
     y,
   }),
-  ({board}, {x, y}) => board[y][x]
+  ({board, height, width}, {x, y}) => {
+    const surroundingTiles = getSurroundingTiles({board, height, width, x, y});
+
+    return {
+      ...board[y][x],
+      mineCount: surroundingTiles.reduce(
+        (count, tile) => (tile.isMine ? count + 1 : count),
+        0
+      ),
+      flagCount: surroundingTiles.reduce(
+        (count, tile) => (tile.flagged ? count + 1 : count),
+        0
+      ),
+    };
+  }
 );
 
 export const getSurroundingTiles = ({
@@ -55,20 +69,7 @@ export const getSurroundingTiles = ({
   return neighbors;
 };
 
-export const getTileMineCount = createSelector(
-  (state: BoardState) => state.board,
-  (_: BoardState, {x, y}: {x: number; y: number}) => ({
-    x,
-    y,
-  }),
-  ({board, height, width}, {x, y}) =>
-    getSurroundingTiles({board, height, width, x, y}).reduce(
-      (count, tile) => (tile.isMine ? count + 1 : count),
-      0
-    )
-);
-
-export const getTileSatisfied = createSelector(
+export const selectTileIsSatisfied = createSelector(
   (state: BoardState) => state.board,
   (_: BoardState, {x, y}: {x: number; y: number}) => ({
     x,
@@ -89,7 +90,7 @@ export const getTileSatisfied = createSelector(
   }
 );
 
-export const getTileNeighborsOpen = createSelector(
+export const selectTileNeighborsOpen = createSelector(
   (state: BoardState) => state.board,
   (_: BoardState, {x, y}: {x: number; y: number}) => ({
     x,
