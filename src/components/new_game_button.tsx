@@ -1,16 +1,19 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {selectBoard} from 'redux/selectors/board_selectors';
-import {generateBoard} from 'redux/slices/board_slice';
-import {setGameState} from 'redux/slices/game_state_slice';
-import {GAME_STATE_NEW_GAME} from 'types';
+import {BOARD_CREATE_EMPTY} from 'redux/slices/board_slice';
 
 const NewGameButton = () => {
   const dispatch = useDispatch();
   const {width, height} = useSelector(selectBoard);
 
   const onClick = () => {
-    dispatch(generateBoard({width, height, mineCount: 0}));
-    dispatch(setGameState({gameState: GAME_STATE_NEW_GAME}));
+    dispatch({
+      type: BOARD_CREATE_EMPTY,
+      payload: {
+        width,
+        height,
+      },
+    });
   };
 
   return <button onClick={onClick}>New Game</button>;

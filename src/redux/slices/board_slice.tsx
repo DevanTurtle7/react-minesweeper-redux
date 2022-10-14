@@ -1,6 +1,9 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, current} from '@reduxjs/toolkit';
 import {getSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board} from '../../types';
+
+export const BOARD_CREATE_EMPTY = 'board/createEmpty';
+export const BOARD_GENERATE = 'board/generateBoard';
 
 export interface BoardState {
   board: BoardSlice;
@@ -55,57 +58,60 @@ const openTileRec = ({
   }
 };
 
+const createBoard = ({
+  height,
+  width,
+  mineCount,
+}: {
+  height: number;
+  width: number;
+  mineCount: number;
+}) => {
+  let minesPlaced = 0;
+  const mineLocations = new Set();
+  const board: Board = [];
+
+  while (minesPlaced < mineCount) {
+    const y = Math.floor(Math.random() * height);
+    const x = Math.floor(Math.random() * width);
+    const key = y * width + x;
+
+    if (!mineLocations.has(key)) {
+      mineLocations.add(key);
+      minesPlaced++;
+    }
+  }
+
+  for (let y = 0; y < height; y++) {
+    board.push([]);
+    for (let x = 0; x < width; x++) {
+      const key = y * width + x;
+
+      board[y].push({
+        open: false,
+        isMine: mineLocations.has(key),
+        flagged: false,
+        x,
+        y,
+      });
+    }
+  }
+
+  return {
+    board: board,
+    height,
+    width,
+    mineCount,
+  };
+};
+
 const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    generateBoard: (state, {payload: {height, width, mineCount}}) => {
+    generateBoard: (state, {payload}) => {
       // TODO: Add another generate board reducer for first move. Add ignore tiles
-      if (mineCount > height * width) {
-        return {
-          board: [...state.board],
-          height,
-          width,
-          mineCount,
-        };
-      }
-
-      let minesPlaced = 0;
-      const mineLocations = new Set();
-      const board: Board = [];
-
-      while (minesPlaced < mineCount) {
-        const y = Math.floor(Math.random() * height);
-        const x = Math.floor(Math.random() * width);
-        const key = y * width + x;
-
-        if (!mineLocations.has(key)) {
-          mineLocations.add(key);
-          minesPlaced++;
-        }
-      }
-
-      for (let y = 0; y < height; y++) {
-        board.push([]);
-        for (let x = 0; x < width; x++) {
-          const key = y * width + x;
-
-          board[y].push({
-            open: false,
-            isMine: mineLocations.has(key),
-            flagged: false,
-            x,
-            y,
-          });
-        }
-      }
-
-      return {
-        board: board,
-        height,
-        width,
-        mineCount,
-      };
+      return createBoard(payload);
     },
     openTile: ({board}, {payload: {x, y}}) => {
       board[y][x].open = true;
@@ -115,6 +121,11 @@ const boardSlice = createSlice({
     },
     setTileFlag: ({board}, {payload: {flagged, x, y}}) => {
       board[y][x].flagged = flagged;
+    },
+  },
+  extraReducers: {
+    [BOARD_CREATE_EMPTY]: (state, {payload: {height, width}}) => {
+      return createBoard({height, width, mineCount: 0});
     },
   },
 });

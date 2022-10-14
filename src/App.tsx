@@ -1,11 +1,14 @@
 import Board from 'components/board';
 import ResetButton from 'components/new_game_button';
 import {useDispatch} from 'react-redux';
-import {generateBoard} from 'redux/slices/board_slice';
+import {BOARD_CREATE_EMPTY} from 'redux/slices/board_slice';
 
 const App = () => {
   const dispatch = useDispatch();
-  dispatch(generateBoard({width: 20, height: 10, mineCount: 0}));
+  dispatch({
+    type: BOARD_CREATE_EMPTY,
+    payload: {width: 20, height: 10},
+  });
 
   return (
     <div className='App'>
