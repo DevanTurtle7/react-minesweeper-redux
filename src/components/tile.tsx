@@ -1,4 +1,6 @@
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {GAME_STATE_SET_LOSS} from 'redux/actions';
 import {selectBoard} from 'redux/selectors/board_selectors';
 import {selectGameState} from 'redux/selectors/game_state_selectors';
 import {
@@ -30,6 +32,12 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   );
   const dispatch = useDispatch();
   const overflagged = flagCount > mineCount && open;
+
+  useEffect(() => {
+    if (isMine && open) {
+      dispatch({type: GAME_STATE_SET_LOSS});
+    }
+  }, [isMine, open]);
 
   const onClick = () => {
     if (gameState === GAME_STATE_NEW_GAME) {
