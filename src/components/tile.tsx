@@ -15,8 +15,7 @@ import {
   openTileRecursive,
   setTileFlag,
 } from 'redux/slices/board_slice';
-import {setGameState} from 'redux/slices/game_state_slice';
-import {GAME_STATE_IN_PROGRESS, GAME_STATE_NEW_GAME} from 'types';
+import {GAME_STATE_LOSS, GAME_STATE_NEW_GAME} from 'types';
 
 const Tile = ({x, y}: {x: number; y: number}) => {
   const {width, height} = useSelector(selectBoard);
@@ -34,34 +33,35 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   const overflagged = flagCount > mineCount && open;
 
   useEffect(() => {
-    if (isMine && open) {
+    if (isMine && open && gameState !== GAME_STATE_LOSS) {
       dispatch({type: GAME_STATE_SET_LOSS});
     }
-  }, [isMine, open]);
+  }, [isMine, open, gameState]);
 
   const onClick = () => {
     if (gameState === GAME_STATE_NEW_GAME) {
       dispatch(generateBoard({width, height, mineCount: 50}));
-      dispatch(setGameState({gameState: GAME_STATE_IN_PROGRESS}));
     }
 
-    if (!flagged) {
-      if (open) {
-        if (!overflagged) {
+    if (gameState !== GAME_STATE_LOSS) {
+      if (!flagged) {
+        if (open) {
+          if (!overflagged) {
+            dispatch(
+              openTileRecursive({
+                x,
+                y,
+              })
+            );
+          }
+        } else {
           dispatch(
-            openTileRecursive({
+            openTile({
               x,
               y,
             })
           );
         }
-      } else {
-        dispatch(
-          openTile({
-            x,
-            y,
-          })
-        );
       }
     }
   };

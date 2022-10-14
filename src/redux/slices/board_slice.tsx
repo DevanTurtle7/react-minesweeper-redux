@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {useDispatch} from 'react-redux';
 import {BOARD_CREATE_EMPTY, GAME_STATE_SET_LOSS} from 'redux/actions';
 import {getSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board} from '../../types';
