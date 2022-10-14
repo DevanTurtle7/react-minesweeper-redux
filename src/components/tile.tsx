@@ -77,7 +77,9 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   return (
     <div
       className={`tile-clickbox tile-clickbox-${
-        !open || (satisfied && !neighborsOpen) ? 'clickable' : 'unclickable'
+        (!open || (satisfied && !neighborsOpen)) && !flagged
+          ? 'clickable'
+          : 'unclickable'
       }`}
       onClick={onClick}
       onContextMenu={onRightClick}
