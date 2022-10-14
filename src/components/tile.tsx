@@ -38,17 +38,23 @@ const Tile = ({x, y}: {x: number; y: number}) => {
     }
 
     if (!flagged) {
-      dispatch(
-        open && !overflagged
-          ? openTileRecursive({
+      if (open) {
+        if (!overflagged) {
+          dispatch(
+            openTileRecursive({
               x,
               y,
             })
-          : openTile({
-              x,
-              y,
-            })
-      );
+          );
+        }
+      } else {
+        dispatch(
+          openTile({
+            x,
+            y,
+          })
+        );
+      }
     }
   };
 
