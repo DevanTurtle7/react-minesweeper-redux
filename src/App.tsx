@@ -1,7 +1,7 @@
 import Board from 'components/Board';
 import ResetButton from 'components/NewGameButton';
 import {useDispatch} from 'react-redux';
-import {BOARD_CREATE_EMPTY} from 'redux/slices/board_slice';
+import {BOARD_CREATE_EMPTY} from 'redux/actions';
 
 const App = () => {
   const dispatch = useDispatch();

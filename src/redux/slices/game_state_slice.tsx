@@ -1,10 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
+  BOARD_CREATE_EMPTY,
+  BOARD_GENERATE,
+  GAME_STATE_SET_LOSS,
+} from 'redux/actions';
+import {
   GameState,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_NEW_GAME,
 } from '../../types';
-import {BOARD_CREATE_EMPTY, BOARD_GENERATE} from './board_slice';
 
 const initialState: GameState = 'NEW_GAME';
 
@@ -14,6 +18,9 @@ const gameStateSlice = createSlice({
   reducers: {
     setGameState: (state, {payload: {gameState}}) => {
       return gameState;
+    },
+    setGameLoss: (state) => {
+      return GAME_STATE_SET_LOSS;
     },
   },
   extraReducers: {

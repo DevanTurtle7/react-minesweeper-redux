@@ -1,9 +1,8 @@
 import {createSlice, current} from '@reduxjs/toolkit';
+import {useDispatch} from 'react-redux';
+import {BOARD_CREATE_EMPTY, GAME_STATE_SET_LOSS} from 'redux/actions';
 import {getSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board} from '../../types';
-
-export const BOARD_CREATE_EMPTY = 'board/createEmpty';
-export const BOARD_GENERATE = 'board/generateBoard';
 
 export interface BoardState {
   board: BoardSlice;
@@ -37,6 +36,11 @@ const openTileRec = ({
   y: number;
 }) => {
   board[y][x].open = true;
+
+  if (board[y][x].isMine) {
+    const dispatch = useDispatch();
+    dispatch({type: GAME_STATE_SET_LOSS});
+  }
 
   const neighbors = getSurroundingTiles({board, height, width, x, y});
   const mineCount = neighbors.reduce(
@@ -126,6 +130,11 @@ const boardSlice = createSlice({
   extraReducers: {
     [BOARD_CREATE_EMPTY]: (state, {payload: {height, width}}) => {
       return createBoard({height, width, mineCount: 0});
+    },
+    [GAME_STATE_SET_LOSS]: (state) => {
+      console.log('they lost');
+      console.log(current(state));
+      return state;
     },
   },
 });

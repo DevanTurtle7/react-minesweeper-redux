@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
+import {BOARD_CREATE_EMPTY} from 'redux/actions';
 import {selectBoard} from 'redux/selectors/board_selectors';
-import {BOARD_CREATE_EMPTY} from 'redux/slices/board_slice';
 
 const NewGameButton = () => {
   const dispatch = useDispatch();
