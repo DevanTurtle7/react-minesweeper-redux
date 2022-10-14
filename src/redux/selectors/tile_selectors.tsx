@@ -9,7 +9,13 @@ export const selectTileFromPosition = createSelector(
     y,
   }),
   ({board, height, width}, {x, y}) => {
-    const surroundingTiles = getSurroundingTiles({board, height, width, x, y});
+    const surroundingTiles = selectSurroundingTiles({
+      board,
+      height,
+      width,
+      x,
+      y,
+    });
 
     return {
       ...board[y][x],
@@ -25,7 +31,7 @@ export const selectTileFromPosition = createSelector(
   }
 );
 
-export const getSurroundingTiles = ({
+export const selectSurroundingTiles = ({
   board,
   height,
   width,
@@ -76,7 +82,7 @@ export const selectTileIsSatisfied = createSelector(
     y,
   }),
   ({board, height, width}, {x, y}) => {
-    const neighbors = getSurroundingTiles({board, height, width, x, y});
+    const neighbors = selectSurroundingTiles({board, height, width, x, y});
     const mineCount = neighbors.reduce(
       (count, tile) => (tile.isMine ? count + 1 : count),
       0
@@ -97,7 +103,7 @@ export const selectTileNeighborsOpen = createSelector(
     y,
   }),
   ({board, height, width}, {x, y}) =>
-    getSurroundingTiles({board, height, width, x, y}).every(
+    selectSurroundingTiles({board, height, width, x, y}).every(
       (tile) => tile.isMine || tile.open
     )
 );

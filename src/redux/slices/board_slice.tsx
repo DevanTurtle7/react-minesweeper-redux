@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {BOARD_CREATE_EMPTY, GAME_STATE_SET_LOSS} from 'redux/actions';
-import {getSurroundingTiles} from 'redux/selectors/tile_selectors';
+import {selectSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board} from '../../types';
 
 export interface BoardState {
@@ -36,7 +36,7 @@ const openTileRec = ({
 }) => {
   board[y][x].open = true;
 
-  const neighbors = getSurroundingTiles({board, height, width, x, y});
+  const neighbors = selectSurroundingTiles({board, height, width, x, y});
   const mineCount = neighbors.reduce(
     (count, tile) => (tile.isMine ? count + 1 : count),
     0
