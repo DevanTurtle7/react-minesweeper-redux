@@ -1,7 +1,7 @@
 import {createSelector} from '@reduxjs/toolkit';
 import {BoardState} from '../slices/board_slice';
 
-export const useBoard = createSelector(
+export const selectBoard = createSelector(
   (state: BoardState) => state.board,
   ({board, width, height, mineCount}) => ({
     board,

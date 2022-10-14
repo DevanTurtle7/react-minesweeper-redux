@@ -1,10 +1,10 @@
 import {useSelector} from 'react-redux';
-import {useBoard} from 'redux/selectors/board_selectors';
+import {selectBoard} from 'redux/selectors/board_selectors';
 import Tile from 'components/tile';
 import {Row} from '../types';
 
 const Board = () => {
-  const {board, width} = useSelector(useBoard);
+  const {board, width} = useSelector(selectBoard);
 
   return (
     <div className='board'>

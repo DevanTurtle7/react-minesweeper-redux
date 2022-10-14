@@ -5,7 +5,7 @@ import {generateBoard} from 'redux/slices/board_slice';
 
 const App = () => {
   const dispatch = useDispatch();
-  dispatch(generateBoard({width: 20, height: 10, mineCount: 50}));
+  dispatch(generateBoard({width: 20, height: 10, mineCount: 0}));
 
   return (
     <div className='App'>
