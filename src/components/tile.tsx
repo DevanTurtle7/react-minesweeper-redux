@@ -31,6 +31,10 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   );
   const dispatch = useDispatch();
   const overflagged = flagCount > mineCount && open;
+  const clickable =
+    gameState !== GAME_STATE_LOSS &&
+    !flagged &&
+    ((open && satisfied && !neighborsOpen) || !open);
 
   useEffect(() => {
     if (isMine && open && gameState !== GAME_STATE_LOSS) {
@@ -40,29 +44,21 @@ const Tile = ({x, y}: {x: number; y: number}) => {
 
   const onClick = () => {
     if (gameState === GAME_STATE_NEW_GAME) {
-      dispatch(generateBoard({width, height, mineCount: 50}));
+      dispatch(generateBoard({width, height, mineCount: 40}));
     }
 
-    if (gameState !== GAME_STATE_LOSS) {
-      if (!flagged) {
-        if (open) {
-          if (!overflagged) {
-            dispatch(
-              openTileRecursive({
-                x,
-                y,
-              })
-            );
-          }
-        } else {
-          dispatch(
-            openTile({
+    if (clickable) {
+      dispatch(
+        open
+          ? openTileRecursive({
               x,
               y,
             })
-          );
-        }
-      }
+          : openTile({
+              x,
+              y,
+            })
+      );
     }
   };
 
@@ -76,19 +72,16 @@ const Tile = ({x, y}: {x: number; y: number}) => {
 
   return (
     <div
-      className={`tile-clickbox tile-clickbox-${
-        (!open || (satisfied && !neighborsOpen)) && !flagged
-          ? 'clickable'
-          : 'unclickable'
+      className={`tile-clickbox ${clickable ? 'tile-clickbox-clickable' : ''}
       }`}
       onClick={onClick}
       onContextMenu={onRightClick}
     >
       <div
         className={`tile tile-${open ? 'open' : 'unopen'} ${
-          isMine && 'tile-mine'
-        } ${flagged && 'tile-flagged'}
-        ${overflagged && 'tile-overflagged'}
+          isMine ? 'tile-mine' : ''
+        } ${flagged ? 'tile-flagged' : ''}
+        ${overflagged ? 'tile-overflagged' : ''}
         `}
       >
         {!isMine && open && mineCount > 0 && (
