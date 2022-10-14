@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {BOARD_CREATE_EMPTY, GAME_STATE_SET_LOSS} from 'redux/actions';
 import {selectSurroundingTiles} from 'redux/selectors/tile_selectors';
-import {Board} from '../../types';
+import {Board, Coordinate} from '../../types';
 
 export interface BoardState {
   board: BoardSlice;
@@ -60,10 +60,12 @@ const createBoard = ({
   height,
   width,
   mineCount,
+  ignore,
 }: {
   height: number;
   width: number;
   mineCount: number;
+  ignore?: Array<Coordinate>;
 }) => {
   let minesPlaced = 0;
   const mineLocations = new Set();
@@ -74,7 +76,10 @@ const createBoard = ({
     const x = Math.floor(Math.random() * width);
     const key = y * width + x;
 
-    if (!mineLocations.has(key)) {
+    if (
+      !mineLocations.has(key) &&
+      ignore?.every((coordinate) => !(coordinate.x === x && coordinate.y === y))
+    ) {
       mineLocations.add(key);
       minesPlaced++;
     }
@@ -86,7 +91,10 @@ const createBoard = ({
       const key = y * width + x;
 
       board[y].push({
-        open: false,
+        open:
+          ignore?.some(
+            (coordinate) => coordinate.x === x && coordinate.y === y
+          ) ?? false,
         isMine: mineLocations.has(key),
         flagged: false,
         x,
@@ -107,9 +115,45 @@ const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    generateBoard: (state, {payload}) => {
-      // TODO: Add another generate board reducer for first move. Add ignore tiles
-      return createBoard(payload);
+    generateBoard: (
+      state,
+      {payload: {height, width, mineCount, clickLocation}}
+    ) => {
+      const ignore = [];
+
+      for (let x = -1; x <= 1; x++) {
+        for (let y = -1; y <= 1; y++) {
+          const currentX = clickLocation.x + x;
+          const currentY = clickLocation.y + y;
+
+          if (
+            currentX >= 0 &&
+            currentX < width &&
+            currentY >= 0 &&
+            currentY < height
+          ) {
+            ignore.push({
+              x: currentX,
+              y: currentY,
+            });
+          }
+        }
+      }
+
+      const result = createBoard({height, width, mineCount, ignore});
+      const {board} = result;
+
+      ignore.forEach(({x, y}) => {
+        openTileRec({
+          board,
+          height,
+          width,
+          x,
+          y,
+        });
+      });
+
+      return result;
     },
     openTile: ({board}, {payload: {x, y}}) => {
       board[y][x].open = true;

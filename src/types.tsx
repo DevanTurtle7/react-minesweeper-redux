@@ -6,6 +6,11 @@ export interface Tile {
   y: number;
 }
 
+export interface Coordinate {
+  x: number;
+  y: number;
+}
+
 export type Row = Array<Tile>;
 
 export type Board = Array<Row>;

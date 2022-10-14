@@ -26,6 +26,8 @@ const gameStateSlice = createSlice({
     [BOARD_CREATE_EMPTY]: (state) => GAME_STATE_NEW_GAME,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     [BOARD_GENERATE]: (state) => GAME_STATE_IN_PROGRESS,
+
+    // TODO: open tile: if all tiles are satisfied and numFlags = numMines, then win
   },
 });
 
