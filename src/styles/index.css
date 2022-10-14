@@ -7,6 +7,10 @@
 .tile {
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .tile-open {
@@ -41,6 +45,7 @@
 
 .tile-label {
   margin: 0;
+  text-align: center;
 }
 
 .unselectable {

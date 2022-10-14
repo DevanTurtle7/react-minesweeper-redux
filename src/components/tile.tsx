@@ -75,7 +75,7 @@ const Tile = ({x, y}: {x: number; y: number}) => {
         ${overflagged && 'tile-overflagged'}
         `}
       >
-        {!isMine && open && (
+        {!isMine && open && mineCount > 0 && (
           <p className='tile-label unselectable'>{mineCount}</p>
         )}
       </div>
