@@ -9,6 +9,12 @@ export const selectBoard = createSelector(
     width,
     height,
     mineCount,
+    flagCount: board.reduce(
+      (count, row) =>
+        count +
+        row.reduce((rowCount, {flagged}) => rowCount + (flagged ? 1 : 0), 0),
+      0
+    ),
   })
 );
 
