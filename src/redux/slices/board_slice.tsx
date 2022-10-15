@@ -1,5 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {BOARD_CREATE_EMPTY, GAME_STATE_SET_LOSS} from 'redux/actions';
+import {
+  BOARD_CREATE_EMPTY,
+  GAME_STATE_SET_LOSS,
+  GAME_STATE_SET_WIN,
+} from 'redux/actions';
 import {selectSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board, Coordinate} from '../../types';
 
@@ -174,6 +178,15 @@ const boardSlice = createSlice({
         row.forEach((tile) => {
           tile.flagged = false;
           tile.open = true;
+        })
+      );
+      return state;
+    },
+    [GAME_STATE_SET_WIN]: (state) => {
+      state.board.forEach((row) =>
+        row.forEach((tile) => {
+          tile.flagged = tile.isMine;
+          tile.open = !tile.isMine;
         })
       );
       return state;

@@ -2,6 +2,32 @@ import {createSelector} from '@reduxjs/toolkit';
 import {BoardState} from 'redux/slices/board_slice';
 import {Board, Tile} from 'types';
 
+export const tileIsSatisfied = ({
+  board,
+  height,
+  width,
+  x,
+  y,
+}: {
+  board: Board;
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}) => {
+  const neighbors = selectSurroundingTiles({board, height, width, x, y});
+  const mineCount = neighbors.reduce(
+    (count, tile) => (tile.isMine ? count + 1 : count),
+    0
+  );
+  const flagCount = neighbors.reduce(
+    (count, tile) => (tile.flagged ? count + 1 : count),
+    0
+  );
+
+  return flagCount === mineCount;
+};
+
 export const selectTileFromPosition = createSelector(
   (state: BoardState) => state.board,
   (_: BoardState, {x, y}: {x: number; y: number}) => ({
@@ -81,19 +107,7 @@ export const selectTileIsSatisfied = createSelector(
     x,
     y,
   }),
-  ({board, height, width}, {x, y}) => {
-    const neighbors = selectSurroundingTiles({board, height, width, x, y});
-    const mineCount = neighbors.reduce(
-      (count, tile) => (tile.isMine ? count + 1 : count),
-      0
-    );
-    const flagCount = neighbors.reduce(
-      (count, tile) => (tile.flagged ? count + 1 : count),
-      0
-    );
-
-    return flagCount === mineCount;
-  }
+  (state, coordinates) => tileIsSatisfied({...state, ...coordinates})
 );
 
 export const selectTileNeighborsOpen = createSelector(

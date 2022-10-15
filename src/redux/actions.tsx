@@ -4,3 +4,4 @@ export const BOARD_OPEN_TILE = 'board/openTile';
 export const BOARD_OPEN_RECURSIVE = 'board/openTileRecursive';
 
 export const GAME_STATE_SET_LOSS = 'gameState/setGameLoss';
+export const GAME_STATE_SET_WIN = 'gameState/setGameWin';

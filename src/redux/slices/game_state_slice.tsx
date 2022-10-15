@@ -1,23 +1,14 @@
-import {createSlice, current} from '@reduxjs/toolkit';
-import {
-  BOARD_CREATE_EMPTY,
-  BOARD_GENERATE,
-  BOARD_OPEN_RECURSIVE,
-  BOARD_OPEN_TILE,
-} from 'redux/actions';
-import store from 'redux/store';
+import {createSlice} from '@reduxjs/toolkit';
+import {BOARD_CREATE_EMPTY, BOARD_GENERATE} from 'redux/actions';
 import {
   GameState,
   GAME_STATE_IN_PROGRESS,
   GAME_STATE_LOSS,
   GAME_STATE_NEW_GAME,
+  GAME_STATE_WIN,
 } from '../../types';
 
 const initialState: GameState = 'NEW_GAME';
-
-const winReducer = (state) => {
-  return state;
-};
 
 const gameStateSlice = createSlice({
   name: 'gameState',
@@ -30,16 +21,16 @@ const gameStateSlice = createSlice({
     setGameLoss: (state) => {
       return GAME_STATE_LOSS;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setGameWin: (state) => {
+      return GAME_STATE_WIN;
+    },
   },
   extraReducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     [BOARD_CREATE_EMPTY]: (state) => GAME_STATE_NEW_GAME,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     [BOARD_GENERATE]: (state) => GAME_STATE_IN_PROGRESS,
-
-    // TODO: open tile: if all tiles are satisfied and numFlags = numMines, then win
-    [BOARD_OPEN_RECURSIVE]: winReducer,
-    [BOARD_OPEN_TILE]: winReducer,
   },
 });
 

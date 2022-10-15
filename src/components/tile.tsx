@@ -45,7 +45,7 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   const onClick = () => {
     if (gameState === GAME_STATE_NEW_GAME) {
       dispatch(
-        generateBoard({width, height, mineCount: 40, clickLocation: {x, y}})
+        generateBoard({width, height, mineCount: 10, clickLocation: {x, y}})
       );
     }
 
