@@ -1,5 +1,6 @@
 import Board from 'components/Board';
 import ResetButton from 'components/NewGameButton';
+import Settings from 'components/Settings';
 import StatusIndicator from 'components/StatusIndicator';
 import {useDispatch} from 'react-redux';
 import {BOARD_CREATE_EMPTY} from 'redux/actions';
@@ -16,6 +17,7 @@ const App = () => {
       <StatusIndicator />
       <Board />
       <ResetButton />
+      <Settings />
     </div>
   );
 };
