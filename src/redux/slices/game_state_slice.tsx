@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {BOARD_CREATE_EMPTY, BOARD_GENERATE} from 'redux/actions';
+import {BOARD_CREATE_EMPTY, BOARD_GENERATE} from 'redux/actions/board_actions';
 import {
   GameState,
   GAME_STATE_IN_PROGRESS,

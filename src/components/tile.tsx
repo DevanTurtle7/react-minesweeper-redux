@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {GAME_STATE_SET_LOSS} from 'redux/actions';
+import {gameStateSetLoss} from 'redux/actions/game_state_actions';
 import {selectGameState} from 'redux/selectors/game_state_selectors';
 import {selectPreferences} from 'redux/selectors/preferences_selectors';
 import {
@@ -43,7 +43,7 @@ const Tile = ({x, y}: {x: number; y: number}) => {
 
   useEffect(() => {
     if (gameNotLost && isMine && open) {
-      dispatch({type: GAME_STATE_SET_LOSS});
+      dispatch(gameStateSetLoss());
     }
   }, [gameNotLost, isMine, open]);
 

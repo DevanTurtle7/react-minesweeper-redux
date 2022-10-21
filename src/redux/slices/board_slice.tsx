@@ -1,9 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {BOARD_CREATE_EMPTY} from 'redux/actions/board_actions';
 import {
-  BOARD_CREATE_EMPTY,
   GAME_STATE_SET_LOSS,
   GAME_STATE_SET_WIN,
-} from 'redux/actions';
+} from 'redux/actions/game_state_actions';
 import {selectSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board, Coordinate} from '../../types';
 

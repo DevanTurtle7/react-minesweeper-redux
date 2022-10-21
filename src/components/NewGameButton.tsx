@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {BOARD_CREATE_EMPTY} from 'redux/actions';
+import {createEmptyBoard} from 'redux/actions/board_actions';
 import {selectPreferences} from 'redux/selectors/preferences_selectors';
 
 const NewGameButton = () => {
@@ -8,13 +8,12 @@ const NewGameButton = () => {
 
   const onClick = () => {
     console.log('new game');
-    dispatch({
-      type: BOARD_CREATE_EMPTY,
-      payload: {
+    dispatch(
+      createEmptyBoard({
         width,
         height,
-      },
-    });
+      })
+    );
   };
 
   return <button onClick={onClick}>New Game</button>;

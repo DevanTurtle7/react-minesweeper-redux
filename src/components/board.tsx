@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {GAME_STATE_SET_WIN} from 'redux/actions';
 import {selectBoard} from 'redux/selectors/board_selectors';
 import {selectGameState} from 'redux/selectors/game_state_selectors';
 import {selectBoardWon} from 'redux/selectors/board_selectors';
@@ -8,6 +7,7 @@ import {GAME_STATE_IN_PROGRESS, Row} from '../types';
 import Tile from './Tile';
 
 import '../styles/board.scss';
+import {gameStateSetWin} from 'redux/actions/game_state_actions';
 
 const Board = () => {
   const {board, width} = useSelector(selectBoard);
@@ -17,7 +17,7 @@ const Board = () => {
 
   useEffect(() => {
     if (boardWon && gameState === GAME_STATE_IN_PROGRESS) {
-      dispatch({type: GAME_STATE_SET_WIN});
+      dispatch(gameStateSetWin());
     }
   }, [boardWon, gameState]);
 
