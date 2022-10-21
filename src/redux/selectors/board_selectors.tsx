@@ -1,9 +1,9 @@
 import {createSelector} from '@reduxjs/toolkit';
-import {BoardState} from '../slices/board_slice';
+import {ReduxState} from 'types';
 import {tileIsSatisfied} from './tile_selectors';
 
 export const selectBoard = createSelector(
-  (state: BoardState) => state.board,
+  (state: ReduxState) => state.board,
   ({board, width, height, mineCount}) => ({
     board,
     width,
@@ -19,7 +19,7 @@ export const selectBoard = createSelector(
 );
 
 export const selectBoardWon = createSelector(
-  (state: BoardState) => state,
+  (state: ReduxState) => state,
   ({board}) =>
     board.board.every((row) =>
       row.every(

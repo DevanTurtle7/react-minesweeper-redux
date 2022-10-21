@@ -1,6 +1,6 @@
 import {createSelector} from '@reduxjs/toolkit';
 import {BoardState} from 'redux/slices/board_slice';
-import {Board, Tile} from 'types';
+import {Board, Coordinate, ReduxState, Tile} from 'types';
 
 export const tileIsSatisfied = ({
   board,
@@ -29,8 +29,8 @@ export const tileIsSatisfied = ({
 };
 
 export const selectTileFromPosition = createSelector(
-  (state: BoardState) => state.board,
-  (_: BoardState, {x, y}: {x: number; y: number}) => ({
+  (state: ReduxState) => state.board,
+  (_: ReduxState, {x, y}: {x: number; y: number}): Coordinate => ({
     x,
     y,
   }),
@@ -102,8 +102,8 @@ export const selectSurroundingTiles = ({
 };
 
 export const selectTileIsSatisfied = createSelector(
-  (state: BoardState) => state.board,
-  (_: BoardState, {x, y}: {x: number; y: number}) => ({
+  (state: ReduxState) => state.board,
+  (_: ReduxState, {x, y}: {x: number; y: number}): Coordinate => ({
     x,
     y,
   }),
@@ -111,8 +111,8 @@ export const selectTileIsSatisfied = createSelector(
 );
 
 export const selectTileNeighborsOpen = createSelector(
-  (state: BoardState) => state.board,
-  (_: BoardState, {x, y}: {x: number; y: number}) => ({
+  (state: ReduxState) => state.board,
+  (_: ReduxState, {x, y}: {x: number; y: number}) => ({
     x,
     y,
   }),

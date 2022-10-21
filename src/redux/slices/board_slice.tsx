@@ -8,17 +8,13 @@ import {selectSurroundingTiles} from 'redux/selectors/tile_selectors';
 import {Board, Coordinate} from '../../types';
 
 export interface BoardState {
-  board: BoardSlice;
-}
-
-export interface BoardSlice {
   board: Board;
   height: number;
   width: number;
   mineCount: number;
 }
 
-const initialState: BoardSlice = {
+const initialState: BoardState = {
   board: [],
   height: 0,
   width: 0,

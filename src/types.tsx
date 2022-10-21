@@ -1,3 +1,6 @@
+import {BoardState} from 'redux/slices/board_slice';
+import {preferencesState} from 'redux/slices/preferences_slice';
+
 export interface Tile {
   open: boolean;
   isMine: boolean;
@@ -20,3 +23,9 @@ export const GAME_STATE_IN_PROGRESS = 'IN_PROGRESS';
 export const GAME_STATE_WIN = 'WIN';
 export const GAME_STATE_LOSS = 'LOSS';
 export type GameState = 'NEW_GAME' | 'IN_PROGRESS' | 'WIN' | 'LOSS';
+
+export interface ReduxState {
+  board: BoardState;
+  gameState: GameState;
+  preferences: preferencesState;
+}

@@ -9,13 +9,12 @@ import {
   selectTileNeighborsOpen,
 } from 'redux/selectors/tile_selectors';
 import {
-  BoardState,
   generateBoard,
   openTile,
   openTileRecursive,
   setTileFlag,
 } from 'redux/slices/board_slice';
-import {GAME_STATE_LOSS, GAME_STATE_NEW_GAME} from 'types';
+import {GAME_STATE_LOSS, GAME_STATE_NEW_GAME, ReduxState} from 'types';
 
 import '../styles/tile.scss';
 
@@ -24,12 +23,12 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   const {width, height} = useSelector(selectBoard);
   const gameState = useSelector(selectGameState);
   const {open, isMine, flagged, mineCount, flagCount} = useSelector(
-    (state: BoardState) => selectTileFromPosition(state, {x, y})
+    (state: ReduxState) => selectTileFromPosition(state, {x, y})
   );
-  const satisfied = useSelector((state: BoardState) =>
+  const satisfied = useSelector((state: ReduxState) =>
     selectTileIsSatisfied(state, {x, y})
   );
-  const neighborsOpen = useSelector((state: BoardState) =>
+  const neighborsOpen = useSelector((state: ReduxState) =>
     selectTileNeighborsOpen(state, {x, y})
   );
 
