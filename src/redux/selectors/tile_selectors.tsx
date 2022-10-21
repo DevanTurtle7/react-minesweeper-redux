@@ -1,5 +1,4 @@
 import {createSelector} from '@reduxjs/toolkit';
-import {BoardState} from 'redux/slices/board_slice';
 import {Board, Coordinate, ReduxState, Tile} from 'types';
 
 export const tileIsSatisfied = ({
