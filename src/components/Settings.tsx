@@ -1,3 +1,5 @@
+import '../styles/settings.scss';
+
 const Settings = () => {
   return (
     <div id='settings'>

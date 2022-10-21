@@ -3,6 +3,7 @@ import board_reducers from 'redux/slices/board_slice';
 import game_state_reducers from 'redux/slices/game_state_slice';
 
 // TODO: Add preferences slice
+// TODO: Currently selected slice. Add neighbors on click down to highlight them
 
 export default configureStore({
   reducer: {

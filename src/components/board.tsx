@@ -7,6 +7,8 @@ import {selectBoardWon} from 'redux/selectors/board_selectors';
 import {GAME_STATE_IN_PROGRESS, Row} from '../types';
 import Tile from './Tile';
 
+import '../styles/board.scss';
+
 const Board = () => {
   const {board, width} = useSelector(selectBoard);
   const gameState = useSelector(selectGameState);

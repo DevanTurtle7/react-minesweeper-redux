@@ -1,0 +1,44 @@
+.tile {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+
+  &-open {
+    background-color: rgb(215, 215, 215);
+
+    &.tile-mine {
+      background-color: red;
+    }
+  }
+
+  &-unopen {
+    background-color: rgb(150, 150, 150);
+  }
+
+  &-flagged {
+    background-color: green;
+  }
+
+  &-overflagged {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+}
+
+.tile-label {
+  margin: 0;
+  text-align: center;
+}
+
+.tile-clickbox {
+  height: 30px;
+  width: 30px;
+  padding: 2px;
+
+  &-clickable:hover {
+    cursor: pointer;
+    opacity: 0.75;
+  }
+}

@@ -17,7 +17,10 @@ import {
 } from 'redux/slices/board_slice';
 import {GAME_STATE_LOSS, GAME_STATE_NEW_GAME} from 'types';
 
+import '../styles/tile.scss';
+
 const Tile = ({x, y}: {x: number; y: number}) => {
+  const dispatch = useDispatch();
   const {width, height} = useSelector(selectBoard);
   const gameState = useSelector(selectGameState);
   const {open, isMine, flagged, mineCount, flagCount} = useSelector(
@@ -29,38 +32,28 @@ const Tile = ({x, y}: {x: number; y: number}) => {
   const neighborsOpen = useSelector((state: BoardState) =>
     selectTileNeighborsOpen(state, {x, y})
   );
-  const dispatch = useDispatch();
+
   const overflagged = flagCount > mineCount && open;
-  const clickable =
-    gameState !== GAME_STATE_LOSS &&
-    !flagged &&
-    ((open && satisfied && !neighborsOpen) || !open);
+  const gameNotLost = gameState !== GAME_STATE_LOSS;
+  const clickableRecursive = open && satisfied && !neighborsOpen;
+  const clickable = gameNotLost && !flagged && (clickableRecursive || !open);
 
   useEffect(() => {
-    if (isMine && open && gameState !== GAME_STATE_LOSS) {
+    if (gameNotLost && isMine && open) {
       dispatch({type: GAME_STATE_SET_LOSS});
     }
-  }, [isMine, open, gameState]);
+  }, [gameNotLost, isMine, open]);
 
   const onClick = () => {
-    if (gameState === GAME_STATE_NEW_GAME) {
-      dispatch(
-        generateBoard({width, height, mineCount: 10, clickLocation: {x, y}})
-      );
-    }
-
     if (clickable) {
-      dispatch(
-        open
-          ? openTileRecursive({
-              x,
-              y,
-            })
-          : openTile({
-              x,
-              y,
-            })
-      );
+      if (gameState === GAME_STATE_NEW_GAME) {
+        dispatch(
+          generateBoard({width, height, mineCount: 40, clickLocation: {x, y}})
+        );
+      }
+
+      const openAction = open ? openTileRecursive : openTile;
+      dispatch(openAction({x, y}));
     }
   };
 
