@@ -4,7 +4,6 @@ import {gameStateSetLoss} from 'redux/actions/game_state_actions';
 import {selectGameState} from 'redux/selectors/game_state_selectors';
 import {selectPreferences} from 'redux/selectors/preferences_selectors';
 import {
-  selectSurroundingTiles,
   selectTileFromPosition,
   selectTileIsSatisfied,
   selectTileNeighborsOpen,
