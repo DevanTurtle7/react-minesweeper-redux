@@ -90,7 +90,7 @@ const Tile = ({x, y}: {x: number; y: number}) => {
       classNames += ` ${prefix}-overflagged`;
     }
 
-    return classNames!;
+    return classNames ?? '';
   };
 
   return (
