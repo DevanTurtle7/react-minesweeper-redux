@@ -4,6 +4,7 @@ import {gameStateSetLoss} from 'redux/actions/game_state_actions';
 import {selectGameState} from 'redux/selectors/game_state_selectors';
 import {selectPreferences} from 'redux/selectors/preferences_selectors';
 import {
+  selectSurroundingTiles,
   selectTileFromPosition,
   selectTileIsSatisfied,
   selectTileNeighborsOpen,
@@ -73,20 +74,33 @@ const Tile = ({x, y}: {x: number; y: number}) => {
     }
   };
 
+  const getClassNames = ({prefix}: {prefix: string}): string => {
+    let classNames = prefix;
+
+    classNames += ` ${prefix}-${open ? 'open' : 'unopen'}`;
+
+    if (open && isMine) {
+      classNames += ` ${prefix}-mine`;
+    }
+
+    if (flagged) {
+      classNames += ` ${prefix}-flagged`;
+    }
+
+    if (overflagged) {
+      classNames += ` ${prefix}-overflagged`;
+    }
+
+    return classNames!;
+  };
+
   return (
     <div
-      className={`tile-clickbox ${clickable ? 'tile-clickbox-clickable' : ''}
-      }`}
+      className={getClassNames({prefix: 'tile-clickbox'})}
       onClick={onClick}
       onContextMenu={onRightClick}
     >
-      <div
-        className={`tile tile-${open ? 'open' : 'unopen'} ${
-          isMine ? 'tile-mine' : ''
-        } ${flagged ? 'tile-flagged' : ''}
-        ${overflagged ? 'tile-overflagged' : ''}
-        `}
-      >
+      <div className={getClassNames({prefix: 'tile'})}>
         {!isMine && open && mineCount > 0 && (
           <p className='tile-label unselectable'>{mineCount}</p>
         )}

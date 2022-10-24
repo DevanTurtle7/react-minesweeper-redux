@@ -1,3 +1,38 @@
+$primary-color: #3698e2;
+$primary-shadow-dark: #2e81c0;
+$primary-shadow-light: #3eafff;
+
+$open-color: #6bbfff;
+$open-shadow-dark: #5ba2d9;
+$open-shadow-light: #7bdcff;
+
+$mine-color: #e23636;
+$mine-shadow-dark: #c02e2e;
+$mine-shadow-light: #ff3e3e;
+
+$flagged-color: #4ad96e;
+$flagged-shadow-dark: #3fb85e;
+$flagged-shadow-light: #55fa7f;
+
+$overflagged-color: #e6f575;
+$overflagged-shadow-dark: #c4d063;
+$overflagged-shadow-light: #ffff87;
+
+$transition-speed: 0.2s;
+
+body {
+  background: $primary-color;
+}
+
+@mixin neumorphism($background-color, $shadow-dark, $shadow-light) {
+  background: $background-color;
+  box-shadow: 3px 3px 6px $shadow-dark, -3px -3px 6px $shadow-light;
+}
+
+@mixin transitions() {
+  transition: background-color $transition-speed, box-shadow $transition-speed;
+}
+
 .tile {
   height: 100%;
   width: 100%;
@@ -5,25 +40,39 @@
   flex-flow: column;
   justify-content: center;
   align-items: center;
+  border-radius: 4px;
+  @include transitions();
 
   &-open {
-    background-color: rgb(215, 215, 215);
+    @include neumorphism($open-color, $open-shadow-dark, $open-shadow-light);
 
     &.tile-mine {
-      background-color: red;
+      @include neumorphism($mine-color, $mine-shadow-dark, $mine-shadow-light);
     }
   }
 
   &-unopen {
-    background-color: rgb(150, 150, 150);
+    @include neumorphism(
+      $primary-color,
+      $primary-shadow-dark,
+      $primary-shadow-light
+    );
   }
 
   &-flagged {
-    background-color: green;
+    @include neumorphism(
+      $flagged-color,
+      $flagged-shadow-dark,
+      $flagged-shadow-light
+    );
   }
 
   &-overflagged {
-    background-color: rgba(255, 0, 0, 0.5);
+    @include neumorphism(
+      $overflagged-color,
+      $overflagged-shadow-dark,
+      $overflagged-shadow-light
+    );
   }
 }
 
@@ -35,10 +84,29 @@
 .tile-clickbox {
   height: 30px;
   width: 30px;
-  padding: 2px;
+  padding: 6px;
+  border-radius: 4px;
+  @include transitions();
+  background-clip: padding-box;
 
   &-clickable:hover {
     cursor: pointer;
     opacity: 0.75;
+  }
+
+  &-open {
+    background-color: $open-color;
+
+    &.tile-clickbox-mine {
+      background-color: $mine-color;
+    }
+  }
+
+  &-flagged {
+    background-color: $flagged-color;
+  }
+
+  &-overflagged {
+    background-color: $overflagged-color;
   }
 }
